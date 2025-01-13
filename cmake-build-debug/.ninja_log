@@ -1,0 +1,9 @@
+# ninja log v6
+3	731	7596000350777487	build.ninja	a9fdf7252dccc36d
+1088	1372	7595906263321728	CPL_roulette_client.exe	a859d2b5a6b9fa0b
+1	583	7596000350777487	build.ninja	a9fdf7252dccc36d
+1	1177	7596000351655681	CMakeFiles/CPL_roulette_client.dir/src/main.c.obj	a7b3a1c6d999b81d
+65	1226	7596000352303169	CMakeFiles/CPL_roulette_client.dir/src/network_controller.c.obj	bd9775c7df59bb1
+129	1333	7596000352940329	CMakeFiles/CPL_roulette_client.dir/src/game_controller.c.obj	15110ad432b1ff88
+3	974	7596000754595396	CMakeFiles/CPL_roulette_client.dir/src/ui_controller.c.obj	76873dfd4c3ee50
+975	1267	7596000764320791	CPL_roulette_client.exe	de0abbaa00b6505c
