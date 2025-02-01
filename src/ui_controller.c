@@ -145,3 +145,69 @@ MenuAction show_main_menu() {
     sfRenderWindow_destroy(window);
     return ACTION_EXIT;
 }
+
+void show_loading_screen(LoadingScreen* screen, sfRenderWindow* window) {
+
+    // 初始化转圈动画
+    screen->spinner = sfCircleShape_create();
+    sfCircleShape_setRadius(screen->spinner, 30);
+    sfCircleShape_setFillColor(screen->spinner, sfTransparent);
+    sfCircleShape_setOutlineThickness(screen->spinner, 3);
+    sfCircleShape_setOutlineColor(screen->spinner, sfWhite);
+    sfCircleShape_setOrigin(screen->spinner, (sfVector2f){30, 30});
+    sfCircleShape_setPosition(screen->spinner, (sfVector2f){400, 300});
+
+    // 状态文字
+    screen->status_text = sfText_create();
+    sfFont* font = sfFont_createFromFile("../assets/fonts/arial.ttf");
+    sfText_setFont(screen->status_text, font); // 复用主菜单字体
+    sfText_setCharacterSize(screen->status_text, 24);
+    sfText_setFillColor(screen->status_text, sfWhite);
+    sfText_setPosition(screen->status_text, (sfVector2f){300, 400});
+
+    // 状态同步
+    screen->connection_status_mutex = sfMutex_create();
+    screen->status = CONN_STATUS_TRYING;
+}
+
+void update_loading_screen(LoadingScreen* screen, sfRenderWindow* window) {
+    static float angle = 0;
+    angle += 2.5f; // 控制旋转速度
+
+    // 更新转圈动画
+    sfCircleShape_setRotation(screen->spinner, angle);
+
+    // 更新状态文字
+    sfMutex_lock(screen->connection_status_mutex);
+    const char* status_msg = "";
+    switch (screen->status) {
+        case CONN_STATUS_TRYING:
+            status_msg = "Connecting...";
+            break;
+        case CONN_STATUS_SUCCESS:
+            status_msg = "Success";
+            break;
+        case CONN_STATUS_FAILED:
+            status_msg = "Fail";
+            break;
+    }
+    sfMutex_unlock(screen->connection_status_mutex);
+    sfText_setString(screen->status_text, status_msg);
+
+    // 居中文字
+    sfFloatRect text_rect = sfText_getLocalBounds(screen->status_text);
+    sfText_setOrigin(screen->status_text, (sfVector2f){text_rect.width/2, 0});
+    sfText_setPosition(screen->status_text, (sfVector2f){400, 400});
+
+    // 渲染
+    sfRenderWindow_clear(window, sfColor_fromRGB(40, 40, 40));
+    sfRenderWindow_drawCircleShape(window, screen->spinner, NULL);
+    sfRenderWindow_drawText(window, screen->status_text, NULL);
+    sfRenderWindow_display(window);
+}
+
+void destroy_loading_screen(LoadingScreen* screen) {
+    sfCircleShape_destroy(screen->spinner);
+    sfText_destroy(screen->status_text);
+    sfMutex_destroy(screen->connection_status_mutex);
+}

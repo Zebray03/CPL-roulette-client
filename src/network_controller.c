@@ -1,28 +1,54 @@
-#include "../include/network_controller.h"
+#include "network_controller.h"
+#include "ui_controller.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include <SFML/System/Mutex.h>
 
 #define CONN_TIMEOUT 60
 #define RETRY_INTERVAL 2
 
-ConnectStatus connect_to_server(NetworkController* nc) {
+ConnectStatus connect_to_server(NetworkController* nc, LoadingScreen* screen) {
+
+    // 检查 connection_status_mutex 是否初始化
+    if (!screen->connection_status_mutex) {
+        fprintf(stderr, "Error: connection_status_mutex is not initialized!\n");
+        return CONNECT_FAIL_SOCKET;
+    }
+
+
+
+
+
+
     WSADATA wsaData;
     time_t start_time = time(NULL);
     int try_count = 0;
 
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         printf("Failed to initialize Winsock. Error Code: %d\n", WSAGetLastError());
+        {
+            sfMutex_lock(screen->connection_status_mutex);
+            nc->connect_status = CONNECT_FAIL_SOCKET;
+            sfMutex_unlock(screen->connection_status_mutex);
+        }
         return CONNECT_FAIL_SOCKET;
     }
 
     while (difftime(time(NULL), start_time) < CONN_TIMEOUT) {
-        printf("%d\n", ++try_count);
-        if ((nc->socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
-            printf("Socket creation failed. Error Code: %d\n", WSAGetLastError());
-            continue;
+        // 更新UI状态
+        {
+            sfMutex_lock(screen->connection_status_mutex);
+            screen->status = CONN_STATUS_TRYING;
+            sfMutex_unlock(screen->connection_status_mutex);
         }
+
+        // printf("%d\n", ++try_count);
+        // if ((nc->socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
+        //     printf("Socket creation failed. Error Code: %d\n", WSAGetLastError());
+        //     continue;
+        // }
 
         // 非阻塞模式
         unsigned long mode = 1;
@@ -66,6 +92,11 @@ ConnectStatus connect_to_server(NetworkController* nc) {
                 printf("Connection failed. Error Code: %d\n", connect_error);
                 closesocket(nc->socket);
                 WSACleanup();
+                {
+                    sfMutex_lock(screen->connection_status_mutex);
+                    nc->connect_status = CONNECT_FAIL_NET_ERROR;
+                    sfMutex_unlock(screen->connection_status_mutex);
+                }
                 return CONNECT_FAIL_NET_ERROR;
             }
         }
@@ -74,18 +105,27 @@ ConnectStatus connect_to_server(NetworkController* nc) {
         mode = 0;
         ioctlsocket(nc->socket, FIONBIO, &mode);
 
-        MessageBox(NULL, "Success", "state", MB_OK);
-        printf("Connected to %s:%d\n", SERVER_IP, PORT);
+        // 成功连接
+        {
+            sfMutex_lock(screen->connection_status_mutex);
+            screen->status = CONN_STATUS_SUCCESS;
+            sfMutex_unlock(screen->connection_status_mutex);
+        }
         return CONNECT_SUCCESS;
     }
 
     // 超时处理
-    int ret = MessageBox(NULL, "Timeout. Retry?", "Connect fail.", MB_YESNO);
-    if (ret == IDYES) {
-        return connect_to_server(nc); // 递归重试
-    }
+    // int ret = MessageBox(NULL, "Timeout. Retry?", "Connect fail.", MB_YESNO);
+    // if (ret == IDYES) {
+    //     return connect_to_server(nc); // 递归重试
+    // }
 
     WSACleanup();
+    {
+        sfMutex_lock(screen->connection_status_mutex);
+        screen->status = CONN_STATUS_FAILED;
+        sfMutex_unlock(screen->connection_status_mutex);
+    }
     return CONNECT_FAIL_TIMEOUT;
 }
 

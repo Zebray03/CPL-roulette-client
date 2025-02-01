@@ -6,24 +6,29 @@
 #include <ws2tcpip.h>
 
 #include "game.h"
+#include "ui_controller.h"
 #include "../lib/cJSON/cJSON.h"
 
 #define SERVER_IP "127.0.0.1"
 #define PORT 8080
 #define BUFFER_SIZE 1024
 
-typedef struct {
-    SOCKET socket;
-    struct sockaddr_in server_addr;
-    Game pvp_game;
-} NetworkController;
-
 typedef enum {
     CONNECT_SUCCESS,
     CONNECT_FAIL_TIMEOUT,
     CONNECT_FAIL_SOCKET,
     CONNECT_FAIL_NET_ERROR,
+    CONNECT_TRYING
 } ConnectStatus;
+
+typedef struct {
+    SOCKET socket;
+    struct sockaddr_in server_addr;
+    Game pvp_game;
+    ConnectStatus connect_status;
+} NetworkController;
+
+
 
 typedef enum {
     MSG_SHOOT,
@@ -36,7 +41,7 @@ typedef struct {
     cJSON* data;
 } GameMessage;
 
-ConnectStatus connect_to_server(NetworkController* nc);
+ConnectStatus connect_to_server(NetworkController* nc, LoadingScreen* screen);
 
 void send_message(NetworkController* nc, GameMessage* msg);
 

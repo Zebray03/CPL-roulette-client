@@ -26,4 +26,16 @@ typedef struct {
 
 MenuAction show_main_menu(void);
 
+typedef struct {
+    sfCircleShape* spinner;
+    sfText* status_text;
+    sfThread* connect_thread;
+    ConnectionStatus status;
+    sfMutex* connection_status_mutex;
+} LoadingScreen;
+
+void show_loading_screen(LoadingScreen* screen, sfRenderWindow* window);
+void update_loading_screen(LoadingScreen* screen, sfRenderWindow* window);
+void destroy_loading_screen(LoadingScreen* screen);
+
 #endif // UICONTROLLER_H
