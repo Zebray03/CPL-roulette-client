@@ -1,17 +1,29 @@
 #ifndef UICONTROLLER_H
 #define UICONTROLLER_H
 
-#include "game_controller.h"
+#include "game.h"
+#include <SFML/Graphics.h>
+
+typedef enum {
+    ACTION_NONE,
+    ACTION_PVP,
+    ACTION_PVE,
+    ACTION_EXIT
+} MenuAction;
+
+typedef enum {
+    CONN_STATUS_TRYING,
+    CONN_STATUS_SUCCESS,
+    CONN_STATUS_FAILED
+} ConnectionStatus;
 
 typedef struct {
-    HWND hwnd;
-    HWND txtOutput;
-    HWND txtInput;
-    HWND btnSend;
-} UIController;
+    sfRectangleShape* shape;
+    sfText* text;
+    sfBool is_hovered;
+    MenuAction action;
+} Button;
 
-void createWindow(UIController* self, HINSTANCE hInstance);
+MenuAction show_main_menu(void);
 
-void updateUI(UIController* self, const char* message);
-
-#endif //UICONTROLLER_H
+#endif // UICONTROLLER_H

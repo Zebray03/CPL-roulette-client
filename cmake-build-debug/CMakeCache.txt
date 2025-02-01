@@ -222,6 +222,12 @@ CPL_roulette_client_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 CPL_roulette_client_SOURCE_DIR:STATIC=C:/Users/Zhang Alphonse/Desktop/CPL-roulette-client
 
+//The directory containing a CMake configuration file for CSFML.
+CSFML_DIR:PATH=CSFML_DIR-NOTFOUND
+
+//The directory containing a CMake configuration file for raylib.
+raylib_DIR:PATH=raylib_DIR-NOTFOUND
+
 
 ########################
 # INTERNAL cache entries
