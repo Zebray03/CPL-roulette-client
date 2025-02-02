@@ -3,25 +3,32 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include <SFML/System.h>
 
-#define CONN_TIMEOUT 60
+#define CONN_TIMEOUT 6
 #define RETRY_INTERVAL 2
 
-ConnectStatus connect_to_server(NetworkController* nc) {
+sfMutex* connection_mutex; // 初始化连接mutex
+volatile bool g_connection_finished;  // 网络线程是否完成
+volatile ConnectStatus g_connection_result;  // 连接结果
+volatile bool g_connection_interrupt;
+
+ConnectStatus execute_connection(NetworkController* nc) {
     WSADATA wsaData;
     time_t start_time = time(NULL);
-    int try_count = 0;
+    //int try_count = 0;
 
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-        printf("Failed to initialize Winsock. Error Code: %d\n", WSAGetLastError());
-        return CONNECT_FAIL_SOCKET;
+        return CONNECT_FAIL_WSA_ERROR;
     }
 
     while (difftime(time(NULL), start_time) < CONN_TIMEOUT) {
-        printf("%d\n", ++try_count);
+        if (g_connection_interrupt) {
+            return CONNECT_FAIL_INTERRUPT;
+        }
+
         if ((nc->socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
-            printf("Socket creation failed. Error Code: %d\n", WSAGetLastError());
-            continue;
+            return CONNECT_FAIL_SOCKET;
         }
 
         // 非阻塞模式
@@ -62,7 +69,7 @@ ConnectStatus connect_to_server(NetworkController* nc) {
                 continue;
             }
 
-            if (connect_error != 0) {  // 连接最终失败
+            if (connect_error != 0) {  // 连接失败
                 printf("Connection failed. Error Code: %d\n", connect_error);
                 closesocket(nc->socket);
                 WSACleanup();
@@ -73,20 +80,44 @@ ConnectStatus connect_to_server(NetworkController* nc) {
         // 恢复阻塞模式
         mode = 0;
         ioctlsocket(nc->socket, FIONBIO, &mode);
-
-        MessageBox(NULL, "Success", "state", MB_OK);
-        printf("Connected to %s:%d\n", SERVER_IP, PORT);
         return CONNECT_SUCCESS;
     }
 
-    // 超时处理
-    int ret = MessageBox(NULL, "Timeout. Retry?", "Connect fail.", MB_YESNO);
-    if (ret == IDYES) {
-        return connect_to_server(nc); // 递归重试
-    }
-
+    // 超时
     WSACleanup();
     return CONNECT_FAIL_TIMEOUT;
+}
+
+void network_connection_thread(NetworkController* nc) {
+    ConnectStatus result = execute_connection(nc);
+
+    // 临界区访问
+    sfMutex_lock(connection_mutex);
+    g_connection_result = result;
+    g_connection_finished = true;
+    sfMutex_unlock(connection_mutex);
+}
+
+ConnectStatus connect_to_server(NetworkController* nc) {
+    sfThread* sf_thread = sfThread_create(network_connection_thread, nc);
+    sfThread_launch(sf_thread);
+
+    // 临界区访问
+    while (true) {
+        sfMutex_lock(connection_mutex);
+        bool finished = g_connection_finished;
+        sfMutex_unlock(connection_mutex);
+        if (finished) {
+            break;
+        }
+        sfSleep(sfMilliseconds(50));
+    }
+
+    ConnectStatus status = g_connection_result;
+    sfThread_destroy(sf_thread);
+    sfMutex_destroy(connection_mutex);
+
+    return status;
 }
 
 void send_message(NetworkController* nc, GameMessage* msg) {
@@ -115,5 +146,4 @@ void receive_message(NetworkController* nc, GameMessage* msg) {
     buffer[recv_size] = '\0';
 }
 
-void start_pvp_battle(NetworkController* nc) {
-}
+void start_pvp_battle(NetworkController* nc) {}

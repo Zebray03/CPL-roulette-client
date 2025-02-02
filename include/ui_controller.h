@@ -1,15 +1,9 @@
 #ifndef UICONTROLLER_H
 #define UICONTROLLER_H
 
-#include "game.h"
-#include <SFML/Graphics.h>
+#include <stdbool.h>
 
-typedef enum {
-    ACTION_NONE,
-    ACTION_PVP,
-    ACTION_PVE,
-    ACTION_EXIT
-} MenuAction;
+#include "ui_composition.h"
 
 typedef enum {
     CONN_STATUS_TRYING,
@@ -17,13 +11,12 @@ typedef enum {
     CONN_STATUS_FAILED
 } ConnectionStatus;
 
-typedef struct {
-    sfRectangleShape* shape;
-    sfText* text;
-    sfBool is_hovered;
-    MenuAction action;
-} Button;
+MenuAction show_main_menu();
 
-MenuAction show_main_menu(void);
+void show_waiting_ui();
+
+void show_connection_result(const char* result_message);
+
+bool show_retry_dialog();
 
 #endif // UICONTROLLER_H

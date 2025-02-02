@@ -4,6 +4,7 @@
 #include <winsock2.h>
 #include <windows.h>
 #include <ws2tcpip.h>
+#include <SFML/System/Types.h>
 
 #include "game.h"
 #include "../lib/cJSON/cJSON.h"
@@ -21,8 +22,10 @@ typedef struct {
 typedef enum {
     CONNECT_SUCCESS,
     CONNECT_FAIL_TIMEOUT,
+    CONNECT_FAIL_WSA_ERROR,
     CONNECT_FAIL_SOCKET,
     CONNECT_FAIL_NET_ERROR,
+    CONNECT_FAIL_INTERRUPT,
 } ConnectStatus;
 
 typedef enum {
@@ -35,6 +38,11 @@ typedef struct {
     MessageType type;
     cJSON* data;
 } GameMessage;
+
+extern sfMutex* connection_mutex;
+extern volatile bool g_connection_finished;
+extern volatile ConnectStatus g_connection_result;
+extern volatile bool g_connection_interrupt;
 
 ConnectStatus connect_to_server(NetworkController* nc);
 
