@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: CPL_roulette_client
+# Project: CPL_roulette_server
 # Configurations: Debug
 # =============================================================================
 
@@ -49,6 +49,27 @@ cmake_ninja_workdir = C$:/Users/Zhang$ Alphonse/Desktop/CPL-project/CPL-roulette
 
 build cmake_object_order_depends_target_CPL_roulette_client: phony || .
 
+build CMakeFiles/CPL_roulette_client.dir/src/ui/connect_waiting_page.c.obj: C_COMPILER__CPL_roulette_client_unscanned_Debug C$:/Users/Zhang$ Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/src/ui/connect_waiting_page.c || cmake_object_order_depends_target_CPL_roulette_client
+  DEP_FILE = CMakeFiles\CPL_roulette_client.dir\src\ui\connect_waiting_page.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  INCLUDES = -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/CSFML/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/cJSON"
+  OBJECT_DIR = CMakeFiles\CPL_roulette_client.dir
+  OBJECT_FILE_DIR = CMakeFiles\CPL_roulette_client.dir\src\ui
+
+build CMakeFiles/CPL_roulette_client.dir/src/game.c.obj: C_COMPILER__CPL_roulette_client_unscanned_Debug C$:/Users/Zhang$ Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/src/game.c || cmake_object_order_depends_target_CPL_roulette_client
+  DEP_FILE = CMakeFiles\CPL_roulette_client.dir\src\game.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  INCLUDES = -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/CSFML/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/cJSON"
+  OBJECT_DIR = CMakeFiles\CPL_roulette_client.dir
+  OBJECT_FILE_DIR = CMakeFiles\CPL_roulette_client.dir\src
+
+build CMakeFiles/CPL_roulette_client.dir/src/ui/home_page.c.obj: C_COMPILER__CPL_roulette_client_unscanned_Debug C$:/Users/Zhang$ Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/src/ui/home_page.c || cmake_object_order_depends_target_CPL_roulette_client
+  DEP_FILE = CMakeFiles\CPL_roulette_client.dir\src\ui\home_page.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  INCLUDES = -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/CSFML/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/cJSON"
+  OBJECT_DIR = CMakeFiles\CPL_roulette_client.dir
+  OBJECT_FILE_DIR = CMakeFiles\CPL_roulette_client.dir\src\ui
+
 build CMakeFiles/CPL_roulette_client.dir/src/main.c.obj: C_COMPILER__CPL_roulette_client_unscanned_Debug C$:/Users/Zhang$ Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/src/main.c || cmake_object_order_depends_target_CPL_roulette_client
   DEP_FILE = CMakeFiles\CPL_roulette_client.dir\src\main.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
@@ -63,13 +84,6 @@ build CMakeFiles/CPL_roulette_client.dir/src/network_controller.c.obj: C_COMPILE
   OBJECT_DIR = CMakeFiles\CPL_roulette_client.dir
   OBJECT_FILE_DIR = CMakeFiles\CPL_roulette_client.dir\src
 
-build CMakeFiles/CPL_roulette_client.dir/src/ui_controller.c.obj: C_COMPILER__CPL_roulette_client_unscanned_Debug C$:/Users/Zhang$ Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/src/ui_controller.c || cmake_object_order_depends_target_CPL_roulette_client
-  DEP_FILE = CMakeFiles\CPL_roulette_client.dir\src\ui_controller.c.obj.d
-  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/CSFML/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/cJSON"
-  OBJECT_DIR = CMakeFiles\CPL_roulette_client.dir
-  OBJECT_FILE_DIR = CMakeFiles\CPL_roulette_client.dir\src
-
 build CMakeFiles/CPL_roulette_client.dir/src/player.c.obj: C_COMPILER__CPL_roulette_client_unscanned_Debug C$:/Users/Zhang$ Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/src/player.c || cmake_object_order_depends_target_CPL_roulette_client
   DEP_FILE = CMakeFiles\CPL_roulette_client.dir\src\player.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
@@ -77,15 +91,15 @@ build CMakeFiles/CPL_roulette_client.dir/src/player.c.obj: C_COMPILER__CPL_roule
   OBJECT_DIR = CMakeFiles\CPL_roulette_client.dir
   OBJECT_FILE_DIR = CMakeFiles\CPL_roulette_client.dir\src
 
-build CMakeFiles/CPL_roulette_client.dir/src/game.c.obj: C_COMPILER__CPL_roulette_client_unscanned_Debug C$:/Users/Zhang$ Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/src/game.c || cmake_object_order_depends_target_CPL_roulette_client
-  DEP_FILE = CMakeFiles\CPL_roulette_client.dir\src\game.c.obj.d
+build CMakeFiles/CPL_roulette_client.dir/src/ui/ui_composition.c.obj: C_COMPILER__CPL_roulette_client_unscanned_Debug C$:/Users/Zhang$ Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/src/ui/ui_composition.c || cmake_object_order_depends_target_CPL_roulette_client
+  DEP_FILE = CMakeFiles\CPL_roulette_client.dir\src\ui\ui_composition.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
   INCLUDES = -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/CSFML/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/cJSON"
   OBJECT_DIR = CMakeFiles\CPL_roulette_client.dir
-  OBJECT_FILE_DIR = CMakeFiles\CPL_roulette_client.dir\src
+  OBJECT_FILE_DIR = CMakeFiles\CPL_roulette_client.dir\src\ui
 
-build CMakeFiles/CPL_roulette_client.dir/src/ui_composition.c.obj: C_COMPILER__CPL_roulette_client_unscanned_Debug C$:/Users/Zhang$ Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/src/ui_composition.c || cmake_object_order_depends_target_CPL_roulette_client
-  DEP_FILE = CMakeFiles\CPL_roulette_client.dir\src\ui_composition.c.obj.d
+build CMakeFiles/CPL_roulette_client.dir/src/ui_controller.c.obj: C_COMPILER__CPL_roulette_client_unscanned_Debug C$:/Users/Zhang$ Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/src/ui_controller.c || cmake_object_order_depends_target_CPL_roulette_client
+  DEP_FILE = CMakeFiles\CPL_roulette_client.dir\src\ui_controller.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
   INCLUDES = -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/CSFML/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/include" -I"C:/Users/Zhang Alphonse/Desktop/CPL-project/CPL-roulette/CPL-roulette-client/lib/cJSON"
   OBJECT_DIR = CMakeFiles\CPL_roulette_client.dir
@@ -106,7 +120,7 @@ build CMakeFiles/CPL_roulette_client.dir/lib/cJSON/cJSON.c.obj: C_COMPILER__CPL_
 #############################################
 # Link the executable CPL_roulette_client.exe
 
-build CPL_roulette_client.exe: C_EXECUTABLE_LINKER__CPL_roulette_client_Debug CMakeFiles/CPL_roulette_client.dir/src/main.c.obj CMakeFiles/CPL_roulette_client.dir/src/network_controller.c.obj CMakeFiles/CPL_roulette_client.dir/src/ui_controller.c.obj CMakeFiles/CPL_roulette_client.dir/src/player.c.obj CMakeFiles/CPL_roulette_client.dir/src/game.c.obj CMakeFiles/CPL_roulette_client.dir/src/ui_composition.c.obj CMakeFiles/CPL_roulette_client.dir/lib/cJSON/cJSON.c.obj
+build CPL_roulette_client.exe: C_EXECUTABLE_LINKER__CPL_roulette_client_Debug CMakeFiles/CPL_roulette_client.dir/src/ui/connect_waiting_page.c.obj CMakeFiles/CPL_roulette_client.dir/src/game.c.obj CMakeFiles/CPL_roulette_client.dir/src/ui/home_page.c.obj CMakeFiles/CPL_roulette_client.dir/src/main.c.obj CMakeFiles/CPL_roulette_client.dir/src/network_controller.c.obj CMakeFiles/CPL_roulette_client.dir/src/player.c.obj CMakeFiles/CPL_roulette_client.dir/src/ui/ui_composition.c.obj CMakeFiles/CPL_roulette_client.dir/src/ui_controller.c.obj CMakeFiles/CPL_roulette_client.dir/lib/cJSON/cJSON.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lws2_32  -lcsfml-graphics  -lcsfml-window  -lcsfml-system  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LC:/Users/ZHANGA~1/Desktop/CPL-PR~1/CPL-RO~1/CPL-RO~2/lib/CSFML/lib/gcc

@@ -1,19 +1,13 @@
 #ifndef UICONTROLLER_H
 #define UICONTROLLER_H
 
+#include "ui/ui_composition.h"
 #include <stdbool.h>
+#include <SFML/System/Types.h>
 
-#include "ui_composition.h"
+MenuAction show_home_page();
 
-typedef enum {
-    CONN_STATUS_TRYING,
-    CONN_STATUS_SUCCESS,
-    CONN_STATUS_FAILED
-} ConnectionStatus;
-
-MenuAction show_main_menu();
-
-void show_waiting_ui();
+void show_connect_waiting_page();
 
 void show_connection_result(const char* result_message);
 

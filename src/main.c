@@ -11,7 +11,7 @@ int main() {
 
         switch (gs) {
         case MAIN_MENU: {
-            MenuAction choice = show_main_menu();
+            MenuAction choice = show_home_page();
             switch (choice) {
             case ACTION_PVP:
                 gs = CONNECTING;
@@ -33,7 +33,7 @@ int main() {
             g_connection_finished = false;
             g_connection_result = CONNECT_FAIL_TIMEOUT;
             g_connection_interrupt = false;
-            sfThread* waiting_ui_thread = sfThread_create(show_waiting_ui, NULL);
+            sfThread* waiting_ui_thread = sfThread_create(show_connect_waiting_page, NULL);
             sfThread_launch(waiting_ui_thread);
 
             ConnectStatus status = connect_to_server(&nc);

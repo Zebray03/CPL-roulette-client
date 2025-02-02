@@ -16,7 +16,6 @@ volatile bool g_connection_interrupt;
 ConnectStatus execute_connection(NetworkController* nc) {
     WSADATA wsaData;
     time_t start_time = time(NULL);
-    //int try_count = 0;
 
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
         return CONNECT_FAIL_WSA_ERROR;
@@ -115,7 +114,6 @@ ConnectStatus connect_to_server(NetworkController* nc) {
 
     ConnectStatus status = g_connection_result;
     sfThread_destroy(sf_thread);
-    sfMutex_destroy(connection_mutex);
 
     return status;
 }
