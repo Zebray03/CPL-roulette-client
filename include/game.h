@@ -4,8 +4,9 @@
 #include "player.h"
 
 typedef struct {
-    Player gambler;
-    Player demon;
+    Player player;
+    bool is_demon;
+    bool demon_turn;
     int round;
 } Game;
 

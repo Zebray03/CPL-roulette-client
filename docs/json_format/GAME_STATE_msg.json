@@ -1,0 +1,6 @@
+{
+  "type": "GAME_STATE",
+  "turn": true,
+  "round": 1,
+  "real_bullet_num": 3
+}

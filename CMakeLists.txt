@@ -31,6 +31,7 @@ add_executable(
         src/player.c
         src/ui/ui_composition.c
         src/ui_controller.c
+        src/network_protocol.c
 
         ${CJSON_SOURCES}
         ${CJSON_HEADERS}

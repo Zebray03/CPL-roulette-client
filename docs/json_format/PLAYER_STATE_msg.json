@@ -1,0 +1,17 @@
+{
+  "type": "PLAYER_STATE",
+  "hp": 3,
+  "bullets": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "knife_num": 0,
+  "beer_num": 0,
+  "phone_num": 0,
+  "knife_use": false,
+  "beer_use": false,
+  "phone_use": false
+}

@@ -6,9 +6,8 @@
 #define ROUND_NUM 5
 
 typedef struct {
-    char name[50];       // 玩家名称
-    int hp;          // 血量
-    int bullet_view[ROUND_NUM];  // 1 - 实弹，0 - 未知，-1 - 虚弹）
+    int hp;
+    int bullets[ROUND_NUM];  // 1 - 实弹，0 - 未知，-1 - 虚弹）
     int knife_num;
     int beer_num;
     int phone_num;
@@ -19,9 +18,9 @@ typedef struct {
     bool is_my_turn;
 } Player;
 
-void initialize_player(Player* player, const char* name);
+void initialize_player(Player* player);
 
-void assign_items(Player* player, int assigned_knife_num, int assigned_beer_num, int assigned_phone_num);
+void assign_items(Player* player, int knife_num, int beer_num, int phone_num);
 
 void use_knife(Player* player);
 

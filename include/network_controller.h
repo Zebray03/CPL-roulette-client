@@ -1,43 +1,18 @@
 #ifndef NETWORKCONTROLLER_H
 #define NETWORKCONTROLLER_H
 
-#include <winsock2.h>
-#include <windows.h>
-#include <ws2tcpip.h>
-#include <SFML/System/Types.h>
-
+#include <SFML/System.h>
 #include "game.h"
-#include "../lib/cJSON/cJSON.h"
+#include "network_protocol.h"
 
 #define SERVER_IP "127.0.0.1"
 #define PORT 8080
-#define BUFFER_SIZE 1024
 
 typedef struct {
     SOCKET socket;
     struct sockaddr_in server_addr;
     Game pvp_game;
 } NetworkController;
-
-typedef enum {
-    CONNECT_SUCCESS,
-    CONNECT_FAIL_TIMEOUT,
-    CONNECT_FAIL_WSA_ERROR,
-    CONNECT_FAIL_SOCKET,
-    CONNECT_FAIL_NET_ERROR,
-    CONNECT_FAIL_INTERRUPT,
-} ConnectStatus;
-
-typedef enum {
-    MSG_SHOOT,
-    MSG_USE_ITEM,
-    MSG_GAME_STATE
-} MessageType;
-
-typedef struct {
-    MessageType type;
-    cJSON* data;
-} GameMessage;
 
 extern sfMutex* connection_mutex;
 extern volatile bool g_connection_finished;
@@ -46,10 +21,26 @@ extern volatile bool g_connection_interrupt;
 
 ConnectStatus connect_to_server(NetworkController* nc);
 
-void send_message(NetworkController* nc, GameMessage* msg);
-
-void receive_message(NetworkController* nc, GameMessage* msg);
+void wait_for_ready_message(SOCKET socket);
 
 void start_pvp_battle(NetworkController* nc);
+
+cJSON* receive_json_message(SOCKET socket);
+
+void send_game_begin_message(SOCKET socket);
+
+void send_game_state_message(SOCKET socket, bool turn, int round, int real_bullet_num);
+
+void send_item_assign_message(SOCKET socket, int knife_num, int beer_num, int phone_num);
+
+void send_player_state_message(SOCKET socket, Player* player);
+
+void send_item_use_message(SOCKET socket, const char item[]);
+
+void send_player_shoot_message(SOCKET socket, bool is_attack);
+
+void send_shoot_result_message(SOCKET socket, bool is_attack, int damage);
+
+void send_game_over_message(SOCKET socket, bool is_winner);
 
 #endif //NETWORKCONTROLLER_H

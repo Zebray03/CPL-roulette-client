@@ -1,0 +1,5 @@
+{
+  "type": "SHOOT_RESULT",
+  "is_attack": true,
+  "damage": 1
+}

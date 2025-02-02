@@ -6,11 +6,10 @@
 
 #define HP_MAX 3
 
-void initialize_player(Player* player, const char* name) {
-    strcpy(player->name, name);
+void initialize_player(Player* player) {
     player->hp = HP_MAX;
     for (int i = 0; i < ROUND_NUM; i++) {
-        player->bullet_view[i] = 0;
+        player->bullets[i] = 0;
     }
     player->knife_num = 0;
     player->beer_num = 0;
@@ -27,10 +26,10 @@ void initialize_player(Player* player, const char* name) {
     }
 }
 
-void assign_items(Player* player, int assigned_knife_num, int assigned_beer_num, int assigned_phone_num) {
-    player->knife_num += assigned_knife_num;
-    player->beer_num += assigned_beer_num;
-    player->phone_num += assigned_phone_num;
+void assign_items(Player* player, const int knife_num, const int beer_num, const int phone_num) {
+    player->knife_num += knife_num;
+    player->beer_num += beer_num;
+    player->phone_num += phone_num;
 }
 
 void use_knife(Player* player) {

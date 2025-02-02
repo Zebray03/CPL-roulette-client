@@ -17,7 +17,6 @@ int main() {
                 gs = CONNECTING;
                 break;
             case ACTION_PVE:
-                //todo
                 printf("Begin PVE Fight\n");
                 break;
             case ACTION_EXIT:
@@ -66,6 +65,8 @@ int main() {
             break;
         }
         case GAMING: {
+            wait_for_ready_message(nc.socket);
+            printf("Begin PVP Fight\n");
             start_pvp_battle(&nc);
             break;
         }
