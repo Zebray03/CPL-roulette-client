@@ -157,7 +157,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=CPL_roulette_server
+CMAKE_PROJECT_NAME:STATIC=CPL_roulette_client
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=D:/JetBrains/CLion 2024.3.1.1/bin/mingw/bin/ranlib.exe

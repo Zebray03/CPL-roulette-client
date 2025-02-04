@@ -6,52 +6,43 @@
 
 #define HP_MAX 3
 
-void initialize_player(Player* player) {
-    player->hp = HP_MAX;
-    for (int i = 0; i < ROUND_NUM; i++) {
-        player->bullets[i] = 0;
-    }
-    player->knife_num = 0;
-    player->beer_num = 0;
-    player->phone_num = 0;
-    player->knife_use = false;
-    player->beer_use = false;
-    player->phone_use = false;
-    //todo：找服务器拿当前game的所有属性
-    if (player->is_gambler) {
-        player->is_my_turn = false;
-    }
-    else {
-        player->is_my_turn = true;
-    }
-}
+void assign_items(Player* player, const cJSON* item_assign_data) {
+    int knife_num = cJSON_GetObjectItem(item_assign_data, "knife_num")->valueint;
+    int beer_num = cJSON_GetObjectItem(item_assign_data, "beer_num")->valueint;
+    int phone_num = cJSON_GetObjectItem(item_assign_data, "phone_num")->valueint;
 
-void assign_items(Player* player, const int knife_num, const int beer_num, const int phone_num) {
     player->knife_num += knife_num;
     player->beer_num += beer_num;
     player->phone_num += phone_num;
 }
 
-void use_knife(Player* player) {
+bool use_knife(Player* player) {
+    bool use_success;
     if (player->knife_num == 0) {
         printf("don't have knife\n");
+        use_success = false;
     }
     else if (player->knife_use) {
         printf("have used knife already\n");
+        use_success = false;
     }
     else {
         player->knife_num--;
         player->knife_use = true;
-        //todo:在此处调用服务器端use_knife(Player* player)
+        use_success = true;
     }
+    return use_success;
 }
 
-void use_beer(Player* player) {
+bool use_beer(Player* player) {
+    bool use_success;
     if (player->beer_num == 0) {
         printf("don't have beer\n");
+        use_success = false;
     }
     else if (player->beer_use) {
         printf("have used beer already\n");
+        use_success = false;
     }
     else {
         player->hp += 2;
@@ -60,30 +51,50 @@ void use_beer(Player* player) {
         }
         player->beer_num--;
         player->beer_use = true;
-        //todo:在此处调用服务器端use_beer(Player* player)
+        use_success = true;
     }
+    return use_success;
 }
 
-// 这里“任意一发”理解为每一发子弹
-void use_phone(Player* player) {
+bool use_phone(const Player* player) {
+    bool use_success;
     if (player->phone_num == 0) {
         printf("don't have phone\n");
+        use_success = false;
     }
     else if (player->phone_use) {
         printf("have used phone already\n");
+        use_success = false;
     }
     else {
-        //todo
+        int unknown_num = 0;
+        for (int i = 0; i < ROUND_NUM; i++) {
+            if (player->bullets[i] == 0) {
+                unknown_num++;
+            }
+        }
+        if (unknown_num == 0) {
+            printf("don't have unknown one\n");
+            use_success = false;
+        }
+        else {
+            use_success = true;
+        }
     }
+    return use_success;
 }
 
-// void shoot(Player* source, Player* target,
-//            SOCKET current_socket, char current_buffer[],
-//            SOCKET opponent_socket, char opponent_buffer[]) {
-//
-// }
-
-void display_player_info(Player* player) {
-    printf("玩家: %s\n", player->name);
-    printf("血量: %d\n", player->hp);
+void renew_player_state(Player* player, const cJSON* player_state_data) {
+    player->hp = cJSON_GetObjectItem(player_state_data, "hp")->valueint;
+    player->is_demon = cJSON_GetObjectItem(player_state_data, "is_demon")->valueint;
+    cJSON* bullets = cJSON_GetObjectItem(player_state_data, "bullets");
+    for (int i = 0; i < ROUND_NUM; i++) {
+        player->bullets[i] = cJSON_GetArrayItem(bullets, i)->valueint;
+    }
+    player->knife_num = cJSON_GetObjectItem(player_state_data, "knife_num")->valueint;
+    player->beer_num = cJSON_GetObjectItem(player_state_data, "beer_num")->valueint;
+    player->phone_num = cJSON_GetObjectItem(player_state_data, "phone_num")->valueint;
+    player->knife_use = cJSON_GetObjectItem(player_state_data, "knife_use")->valueint;
+    player->beer_use = cJSON_GetObjectItem(player_state_data, "beer_use")->valueint;
+    player->phone_use = cJSON_GetObjectItem(player_state_data, "phone_use")->valueint;
 }

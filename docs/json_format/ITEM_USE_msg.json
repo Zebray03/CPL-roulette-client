@@ -1,4 +1,6 @@
 {
   "type": "ITEM_USE",
-  "item": "KNIFE"
+  "data": {
+    "item": "KNIFE"
+  }
 }

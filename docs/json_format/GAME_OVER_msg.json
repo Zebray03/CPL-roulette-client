@@ -1,4 +1,6 @@
 {
   "type": "GAME_OVER",
-  "is_winner": true
+  "data": {
+    "is_winner": true
+  }
 }

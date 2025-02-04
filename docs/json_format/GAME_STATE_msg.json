@@ -1,6 +1,9 @@
 {
   "type": "GAME_STATE",
-  "turn": true,
-  "round": 1,
-  "real_bullet_num": 3
+  "data": {
+    "turn": true,
+    "rival_hp": 3,
+    "round": 1,
+    "real_bullet_num": 3
+  }
 }

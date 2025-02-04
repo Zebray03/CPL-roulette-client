@@ -2,18 +2,21 @@
 #define GAME_H
 
 #include "player.h"
+#include <winsock2.h>
+#include <windows.h>
+#include <ws2tcpip.h>
 
 typedef struct {
     Player player;
-    bool is_demon;
-    bool demon_turn;
+    bool turn;
+    int rival_hp;
+    int rival_knife_num;
+    int rival_beer_num;
+    int rival_phone_num;
     int round;
+    int real_bullet_num;
 } Game;
 
-void initialize_game(Game* game);
-
-//void shoot(Game* game, NetworkController* nc);
-
-bool is_game_over(Game* game);
+void start_pvp_battle(Game* game, SOCKET socket);
 
 #endif //GAME_H

@@ -1,4 +1,6 @@
 {
   "type": "PLAYER_SHOOT",
-  "is_attack": true
+  "data": {
+    "is_attack": true
+  }
 }

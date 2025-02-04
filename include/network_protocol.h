@@ -1,24 +1,21 @@
 #ifndef NETWORK_PROTOCOL_H
 #define NETWORK_PROTOCOL_H
 
-#include <winsock2.h>
-#include <windows.h>
-#include <ws2tcpip.h>
-#include "cJSON.h"
-
 #define MAX_PACKET_SIZE 1024
 #define DEFAULT_PORT 8080
 
 typedef enum {
+    ACKNOWLEDGE,
     JOIN_REQUEST,
     GAME_BEGIN,
+    GAME_OVER,
     GAME_STATE,
     ITEM_ASSIGN,
-    PLAYER_STATE,
     ITEM_USE,
+    PHONE_RESULT,
     PLAYER_SHOOT,
+    PLAYER_STATE,
     SHOOT_RESULT,
-    GAME_OVER
 } NetMessageType;
 
 typedef enum {

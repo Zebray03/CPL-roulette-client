@@ -1,6 +1,8 @@
 {
   "type": "ITEM_ASSIGN",
-  "knife_num": 1,
-  "beer_num": 1,
-  "phone_num": 1
+  "data": {
+    "knife_num": 1,
+    "beer_num": 1,
+    "phone_num": 1
+  }
 }
